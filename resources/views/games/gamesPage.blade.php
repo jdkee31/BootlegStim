@@ -246,7 +246,7 @@
 		$mediaCollection = collect($mediaItems ?? []);
 		$defaultMedia = $mediaCollection->firstWhere('is_cover', true)
 			?? $mediaCollection->first();
-		$defaultImage = $defaultMedia?->url ?? $game->cover_image ?? 'https://via.placeholder.com/1200x675?text=No+Image';
+		$defaultImage = optional($defaultMedia)->url ?? $game->cover_image ?? 'https://via.placeholder.com/1200x675?text=No+Image';
 	@endphp
 
 	<main class="page-wrap">
