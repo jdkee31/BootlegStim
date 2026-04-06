@@ -67,3 +67,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # BootlegStim
 University student's project, this project uses Laravel as the main development tools. 
 
+# Synchronize Set Up
+1. You must have a database named "bootlegstim" set up first
+2. Run <code>composer run setup</code>
+
