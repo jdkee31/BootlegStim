@@ -162,7 +162,11 @@ body {
     border-bottom: 1px solid var(--line);
 }
 .showcase-section img {
+    display: block; 
     max-width: 100%;
+    height: auto;
+    -o-object-fit: contain;
+       object-fit: contain; 
 }
 
 .showcase-title {

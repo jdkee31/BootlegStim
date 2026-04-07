@@ -24,14 +24,6 @@ jobs:
           --health-timeout=5s
           --health-retries=3
 
-      frontend:
-        image: node:latest
-        volumes:
-          - .:/app
-        command: ["npm", "run", "dev"]
-        ports:
-          - 3000:3000
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,6 +37,17 @@ jobs:
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build
 
       - name: Copy .env
         run: cp .env.example .env
