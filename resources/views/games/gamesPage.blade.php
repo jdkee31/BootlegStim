@@ -54,7 +54,9 @@
 				<h2 class="showcase-title">Game Summary</h2>
 
 				<section class="showcase-section" aria-label="Main cover image">
-					<img src="{{ $selectedImage }}" alt="Main cover image for {{ $game->title }}">
+					<!-- this is not supposed to be selectedImage, but images with is_cover = true -->
+
+					<img src="{{ $mediaCollection->firstWhere('is_cover', true)->url}}" alt="Main cover image for {{ $game->title }}">
 				</section>
 
 				<section class="showcase-section" aria-label="Game description">
