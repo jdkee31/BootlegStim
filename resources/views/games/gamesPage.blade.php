@@ -60,9 +60,7 @@
 				<h2 class="showcase-title">Game Summary</h2>
 
 				<section class="showcase-section" aria-label="Main cover image">
-					<!-- this is not supposed to be selectedImage, but images with is_cover = true -->
-
-					<img src="{{ $mediaCollection->firstWhere('is_cover', true)->url}}" alt="Main cover image for {{ $game->title }}">
+					<img src="{{ $selectedImage }}" alt="Main cover image for {{ $game->title }}">
 				</section>
 
 				<section class="showcase-section" aria-label="Game description">
@@ -96,7 +94,7 @@
 		<section class="pricing-section" aria-label="Pricing section placeholder">
 			<div class="section-heading-wrap">
 				<h2>Section 2: Pricing Placeholder</h2>
-				<p>This section is a placeholder for a future <strong>game_price</strong> table integration.</p>
+				<p>This section is a placeholder for a future <strong>game__pricings</strong> table integration.</p>
 			</div>
 
 			<div class="pricing-card">
@@ -116,11 +114,14 @@
 							<span class="price-tag">No Discount Active</span>
 						</div>
 					@endif
+					@if (!empty($pricing['pricing_id']))
+						<p class="metric-sub">Pricing row ID: {{ $pricing['pricing_id'] }}</p>
+					@endif
 				</div>
 
 				<div class="pricing-actions" aria-label="Shopping actions placeholder">
-					<button type="button" class="btn-cart" disabled>Add To Cart (Placeholder)</button>
-					<p class="hint-text">Planned: button will post selected offer id from future game_price rows.</p>
+					<button type="button" class="btn-cart" data-game-id="{{ $game->id }}" data-pricing-id="{{ $pricing['pricing_id'] ?? '' }}">Add To Cart</button>
+					<p class="hint-text">Planned: button will post the selected pricing row to the cart flow.</p>
 				</div>
 			</div>
 		</section>

@@ -8,8 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     use HasFactory;
-    /** Relationships 
-     * Game hasMany GameMedia
+    /** 
+     * Attributes:
+     * - id: The unique identifier for the game
+     * - title: The title of the game
+     * - description: A brief description of the game
+     * - release_date: The date when the game was released
+     * - developer: The name of the game's developer
+     * - publisher: The name of the game's publisher
+     * - genre: The genre of the game (e.g., Action, RPG, Strategy)
+     * - platforms: An array of platforms the game is available on (e.g., PC
+     * - cover_image_url: A URL to the game's cover image
+     * Relationships:
+     * - A Game has many GameMedia items (images, videos, etc.)
+     * - A Game has many GameReviews
      * 
      * */ 
     protected $fillable = [

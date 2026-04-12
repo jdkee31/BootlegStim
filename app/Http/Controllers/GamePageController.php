@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GamePageController extends Controller
 {
@@ -53,6 +54,14 @@ class GamePageController extends Controller
         // Use the URL of the active media if available, otherwise fall back to the default image
         $selectedImage = optional($activeMedia)->url ?? $defaultImage;
 
+        $pricingRow = DB::table('game__pricings')
+            ->where('game_id', $game->id)
+            ->first();
+
+        $originalPrice = $pricingRow->price ?? $game->price ?? 0;
+        $discountedPrice = $pricingRow->discounted_price ?? null;
+        $hasDiscount = $pricingRow && $discountedPrice !== null && (float) $discountedPrice < (float) $originalPrice;
+
         $reviews = $game->getGamesReviews;
         $totalReviews = $reviews->count();
         $recommendedCount = $reviews->where('is_recommended', true)->count();
@@ -74,11 +83,12 @@ class GamePageController extends Controller
         }
 
         $pricing = [
-            'currency' => 'USD',
-            'base_price' => (float) $game->price,
-            'has_discount' => false,
-            'discount_percent' => null,
-            'discounted_price' => null,
+            'pricing_id' => $pricingRow->id ?? null,
+            'currency' => $pricingRow->currency ?? 'USD',
+            'base_price' => (float) $originalPrice,
+            'has_discount' => $hasDiscount,
+            'discount_percent' => $pricingRow->discount_percentage ?? null,
+            'discounted_price' => $hasDiscount ? (float) $discountedPrice : null,
         ];
         
         // Pass the game, media items, selected image, and active thumbnail ID to the view
