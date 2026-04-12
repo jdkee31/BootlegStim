@@ -10,12 +10,20 @@ class GamePageController extends Controller
     public function show(Request $request, Game $game)
     {
         // Load the media items for the game, filtering for images and ordering them appropriately
-        $game->load(['getMedia' => function ($query) {
-            $query->where('type', 'image')
-                ->orderByDesc('is_cover')
-                ->orderBy('sort_order')
-                ->orderBy('id');
-        }]);
+        $game->load([
+            'getMedia' => function ($query) {
+                $query->where('type', 'image')
+                    ->orderByDesc('is_cover')
+                    ->orderBy('sort_order')
+                    ->orderBy('id');
+            },
+            'getGamesReviews' => function ($query) {
+                $query->with('getUser')
+                    ->orderByDesc('review_date')
+                    ->orderByDesc('helpful_votes')
+                    ->orderByDesc('id');
+            },
+        ]);
 
         // Determine the default image to display
         $mediaItems = $game->getMedia->values();
@@ -44,6 +52,34 @@ class GamePageController extends Controller
         $activeMedia = $activeThumbId ? $mediaItems->firstWhere('id', $activeThumbId) : null;
         // Use the URL of the active media if available, otherwise fall back to the default image
         $selectedImage = optional($activeMedia)->url ?? $defaultImage;
+
+        $reviews = $game->getGamesReviews;
+        $totalReviews = $reviews->count();
+        $recommendedCount = $reviews->where('is_recommended', true)->count();
+        $recommendedPercent = $totalReviews > 0
+            ? (int) round(($recommendedCount / $totalReviews) * 100)
+            : 0;
+
+        $reviewSummary = 'No user reviews yet';
+        if ($totalReviews > 0) {
+            if ($recommendedPercent >= 85) {
+                $reviewSummary = 'Overwhelmingly Positive';
+            } elseif ($recommendedPercent >= 70) {
+                $reviewSummary = 'Very Positive';
+            } elseif ($recommendedPercent >= 40) {
+                $reviewSummary = 'Mixed';
+            } else {
+                $reviewSummary = 'Mostly Negative';
+            }
+        }
+
+        $pricing = [
+            'currency' => 'USD',
+            'base_price' => (float) $game->price,
+            'has_discount' => false,
+            'discount_percent' => null,
+            'discounted_price' => null,
+        ];
         
         // Pass the game, media items, selected image, and active thumbnail ID to the view
         return view('games.gamesPage', [
@@ -51,6 +87,12 @@ class GamePageController extends Controller
             'mediaItems' => $mediaItems,
             'selectedImage' => $selectedImage,
             'activeThumbId' => $activeThumbId,
+            'pricing' => $pricing,
+            'reviews' => $reviews,
+            'totalReviews' => $totalReviews,
+            'recommendedCount' => $recommendedCount,
+            'recommendedPercent' => $recommendedPercent,
+            'reviewSummary' => $reviewSummary,
         ]);
     }
 }

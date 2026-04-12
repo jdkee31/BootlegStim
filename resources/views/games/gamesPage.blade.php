@@ -9,11 +9,17 @@
 <body>
 	@php
 		$mediaCollection = collect($mediaItems ?? []);
+		$reviewCollection = collect($reviews ?? []);
 		$selectedImage = $selectedImage
 			?? optional($mediaCollection->firstWhere('is_cover', true))->url
 			?? optional($mediaCollection->first())->url
 			?? $game->cover_image
 			?? 'https://via.placeholder.com/1200x675?text=No+Image';
+		$priceCurrency = $pricing['currency'] ?? 'USD';
+		$basePrice = $pricing['base_price'] ?? $game->price ?? 0;
+		$hasDiscount = (bool) ($pricing['has_discount'] ?? false);
+		$discountPercent = $pricing['discount_percent'] ?? null;
+		$discountedPrice = $pricing['discounted_price'] ?? null;
 		$activeThumbId = $activeThumbId ?? null;
 	@endphp
 
@@ -85,6 +91,84 @@
 					<p>Placeholder: Genres and tags are not implemented yet.</p>
 				</section>
 			</aside>
+		</section>
+
+		<section class="pricing-section" aria-label="Pricing section placeholder">
+			<div class="section-heading-wrap">
+				<h2>Section 2: Pricing Placeholder</h2>
+				<p>This section is a placeholder for a future <strong>game_price</strong> table integration.</p>
+			</div>
+
+			<div class="pricing-card">
+				<div class="price-block" aria-label="Current pricing preview">
+					<p class="price-label">Store Price</p>
+					@if ($hasDiscount && $discountedPrice !== null)
+						<div class="price-stack">
+							<span class="price-old">{{ $priceCurrency }} {{ number_format((float) $basePrice, 2) }}</span>
+							<span class="price-new">{{ $priceCurrency }} {{ number_format((float) $discountedPrice, 2) }}</span>
+							@if ($discountPercent !== null)
+								<span class="price-discount">-{{ (int) $discountPercent }}%</span>
+							@endif
+						</div>
+					@else
+						<div class="price-stack">
+							<span class="price-new">{{ $priceCurrency }} {{ number_format((float) $basePrice, 2) }}</span>
+							<span class="price-tag">No Discount Active</span>
+						</div>
+					@endif
+				</div>
+
+				<div class="pricing-actions" aria-label="Shopping actions placeholder">
+					<button type="button" class="btn-cart" disabled>Add To Cart (Placeholder)</button>
+					<p class="hint-text">Planned: button will post selected offer id from future game_price rows.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="reviews-section" aria-label="Game reviews and analytics section">
+			<div class="section-heading-wrap">
+				<h2>Section 3: Player Reviews</h2>
+				<p>Steam-style lightweight analytics from <strong>game_reviews</strong> seed data.</p>
+			</div>
+
+			<div class="reviews-analytics">
+				<article class="metric-card">
+					<p class="metric-label">Review Summary</p>
+					<p class="metric-value">{{ $reviewSummary ?? 'No user reviews yet' }}</p>
+					<p class="metric-sub">{{ $totalReviews ?? 0 }} total reviews</p>
+				</article>
+
+				<article class="metric-card">
+					<p class="metric-label">Recommended</p>
+					<p class="metric-value">{{ $recommendedPercent ?? 0 }}%</p>
+					<div class="recommend-meter" role="img" aria-label="{{ $recommendedPercent ?? 0 }} percent recommended">
+						<span style="width: {{ $recommendedPercent ?? 0 }}%;"></span>
+					</div>
+					<p class="metric-sub">{{ $recommendedCount ?? 0 }} positive / {{ ($totalReviews ?? 0) - ($recommendedCount ?? 0) }} negative</p>
+				</article>
+			</div>
+
+			<div class="review-list">
+				@if ($reviewCollection->isNotEmpty())
+					@foreach ($reviewCollection->take(4) as $review)
+						<article class="review-item">
+							<header>
+								<strong>{{ optional($review->getUser)->name ?? 'Anonymous Player' }}</strong>
+								<span class="review-badge {{ $review->is_recommended ? 'is-positive' : 'is-negative' }}">
+									{{ $review->is_recommended ? 'Recommended' : 'Not Recommended' }}
+								</span>
+							</header>
+							<p>{{ $review->review_content ?: 'No written comment provided.' }}</p>
+							<footer>
+								<span>{{ (int) ($review->hours_played ?? 0) }} hrs played</span>
+								<span>{{ (int) ($review->helpful_votes ?? 0) }} found this helpful</span>
+							</footer>
+						</article>
+					@endforeach
+				@else
+					<p class="empty-note">No review rows found yet. Seed using: php artisan db:seed --class=GameReviewSeeder</p>
+				@endif
+			</div>
 		</section>
 	</main>
 </body>
