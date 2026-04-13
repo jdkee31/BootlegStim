@@ -34,7 +34,7 @@ services:
     restart: unless-stopped
     volumes:
       - laravel-storage-production:/var/www/storage # Mount the storage volume
-      - ./.env:/var/www/.env:ro # Mount the .env file as read-only
+      - ./.env:/var/www/.env # Mount the .env file to provide environment variables to the application  
     env_file:
       - .env
     environment:
