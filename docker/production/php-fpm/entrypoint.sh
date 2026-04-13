@@ -20,9 +20,10 @@ echo "Clearing config and cache..."
 php artisan config:clear
 php artisan cache:clear
 
-# Generate app key if not already set
+# Generate APP_KEY if not provided 
 if [ -z "$APP_KEY" ]; then
-  php artisan key:generate --force
+export APP_KEY="base64:$(php -r 'echo base64_encode(random_bytes(32));')"
+echo "APP_KEY not provided; generated runtime key for this container start."
 fi
 
 echo "Running database migrations..."
