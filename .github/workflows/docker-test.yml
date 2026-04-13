@@ -16,12 +16,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # set up environment variables for testing, randomized APP_KEY is generated in the entrypoint script if not provided
       - name: Prepare environment file
         run: |
           cp .env.example .env
           echo "APP_ENV=production" >> .env
           echo "APP_DEBUG=false" >> .env
           echo "DB_CONNECTION=mysql" >> .env
+          echo "APP_KEY=base64:$(openssl rand -base64 32)" >> .env
 
       - name: Validate docker compose configuration
         run: docker compose -f docker-compose.prod.yml config
