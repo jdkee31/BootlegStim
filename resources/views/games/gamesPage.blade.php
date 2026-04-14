@@ -5,8 +5,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ $game->title }} | Product Page</title>
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	<script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
+	@include('topNavbar')
+
 	@php
 		$mediaCollection = collect($mediaItems ?? []);
 		$reviewCollection = collect($reviews ?? []);
@@ -60,7 +63,7 @@
 				<h2 class="showcase-title">Game Summary</h2>
 
 				<section class="showcase-section" aria-label="Main cover image">
-					<img src="{{ $selectedImage }}" alt="Main cover image for {{ $game->title }}">
+					<img src="{{ $game->cover_image }}" alt="Main cover image for {{ $game->title }}">
 				</section>
 
 				<section class="showcase-section" aria-label="Game description">
