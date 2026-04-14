@@ -12,27 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-<<<<<<< HEAD
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-=======
->>>>>>> master
     protected $fillable = [
         'name',
         'email',
         'password',
-<<<<<<< HEAD
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-=======
         'avatar_url',
         'banner_url',
         'bio',
@@ -43,23 +26,11 @@ class User extends Authenticatable
         'last_online_at',
     ];
 
->>>>>>> master
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-<<<<<<< HEAD
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-}
-=======
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_online_at'    => 'datetime',
@@ -121,4 +92,3 @@ class User extends Authenticatable
     return 'status--offline';
 }
 }
->>>>>>> master
