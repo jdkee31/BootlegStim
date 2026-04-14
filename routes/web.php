@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\GamePageController;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +17,16 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-=======
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 
->>>>>>> master
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
+
 Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.show');
-<<<<<<< HEAD
+
 
 //Route::middleware(['auth'])->group(function () {
  
@@ -42,10 +40,6 @@ Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.sh
     Route::post('/checkout/promo', [PaymentController::class, 'applyPromo'])->name('payment.promo');
     Route::post('/checkout/wallet', [PaymentController::class, 'toggleWallet'])->name('payment.wallet.toggle');
 //});
-=======
-=======
-// Game / product page
-Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.show');
 
 // Profile pages
 Route::get('/profile/{user}',         [ProfileController::class, 'show'])->name('profile.show');
@@ -58,5 +52,4 @@ Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register',[AuthController::class, 'register'])->name('register.post');
 Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
->>>>>>> master
->>>>>>> e709acb54976d665d3ca2279c39468d69568069b
+

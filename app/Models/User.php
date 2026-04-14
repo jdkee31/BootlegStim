@@ -16,9 +16,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-<<<<<<< HEAD
         'wallet_balance',
-=======
         'avatar_url',
         'banner_url',
         'bio',
@@ -27,7 +25,6 @@ class User extends Authenticatable
         'status',
         'status_game_id',
         'last_online_at',
->>>>>>> e709acb54976d665d3ca2279c39468d69568069b
     ];
 
     protected $hidden = [
@@ -40,7 +37,6 @@ class User extends Authenticatable
         'last_online_at'    => 'datetime',
     ];
 
-<<<<<<< HEAD
     // ---- Library: games the user owns ----
     public function games()
     {
@@ -61,13 +57,6 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\CartItem::class);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Also add this to the $fillable array in User:
-    |--------------------------------------------------------------------------
-    | 'wallet_balance',
-    */
-=======
     // ── Relationships ────────────────────────────────────────────────────────
 
     /** The game the user is currently playing / last played. */
@@ -80,12 +69,6 @@ class User extends Authenticatable
      * Games owned by the user.
      * Pivot table: user_games (user_id, game_id, playtime_minutes, last_played_at)
      */
-    public function games()
-    {
-        return $this->belongsToMany(Game::class, 'user_games')
-                    ->withPivot(['playtime_minutes', 'last_played_at'])
-                    ->withTimestamps();
-    }
 
     // ── Accessors ────────────────────────────────────────────────────────────
 
@@ -123,5 +106,4 @@ class User extends Authenticatable
     if ($this->status === 'busy')   return 'status--busy';
     return 'status--offline';
 }
->>>>>>> e709acb54976d665d3ca2279c39468d69568069b
 }
