@@ -13,7 +13,7 @@
 		<div class="steam-nav-upper">
 			<a class="steam-nav-link" href="#">Store</a>
 			<a class="steam-nav-link" href="#">Library</a>
-			<a class="steam-nav-user" href="#">{{ $displayUserName }}</a>
+			<a class="steam-nav-user" href="{{ route('profile') }}">{{ $displayUserName }}</a>
 		</div>
 
 		<div class="steam-nav-lower-wrap" id="steamNavLowerWrap">

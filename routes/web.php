@@ -5,17 +5,10 @@ use App\Http\Controllers\GamePageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestDataController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
+// use App\Http\Controllers\UserController;
+// use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,7 +35,30 @@ Route::prefix('test')->name('test.')->middleware('auth')->group(function () {
 });
 
 // authentication routes
-Auth::routes();
+// Note: Using custom AuthController instead of Laravel's built-in Auth::routes() for more control over authentication flow and views
+// Auth::routes();
 
 // home page route after login
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Game / product page
+Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.show');
+
+// Profile pages
+// Profile route needs to check if there is a logged in user before directing to the profile page, 
+// if not logged in, redirect to login page
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', function(){
+        return redirect()->route('profile.show', auth()->user());
+    })->name('profile');
+    Route::get('/profile/{user}',         [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/{user}/edit',    [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/{user}/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+// ── Auth ─────────────────────────────────────────────────────────
+Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register',[AuthController::class, 'register'])->name('register.post');
+Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');

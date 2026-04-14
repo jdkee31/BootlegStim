@@ -7,25 +7,29 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', config('app.name', 'Laravel'))</title>
 
-    <!-- Scripts -->
+    <!-- Scripts now uses the build js asset compilation file js/app.js -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
+    <!-- Styles now uses the build css asset compilation file css/app.css-->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @stack('styles')
+    @yield('head')
 </head>
-<body>
+<body class="@yield('body-class')">
     <div id="app">
         @include('topNavbar')
-        <!-- Allow extends to files with @extend('layouts.app')  -->
-        <main class="py-4">
+        <main class="@yield('main-class', 'py-4')">
             @yield('content')
         </main>
     </div>
+
+    @stack('scripts')
 </body>
 </html>
