@@ -100,10 +100,10 @@ class User extends Authenticatable
 
     /** CSS modifier class for status dot. */
     public function getStatusClassAttribute(): string
-{
-    if ($this->status === 'online') return 'status--online';
-    if ($this->status === 'away')   return 'status--away';
-    if ($this->status === 'busy')   return 'status--busy';
-    return 'status--offline';
-}
+    {
+        if ($this->status === 'online') return 'status--online';
+        if ($this->status === 'away')   return 'status--away';
+        if ($this->status === 'busy')   return 'status--busy';
+        return 'status--offline';
+    }
 }

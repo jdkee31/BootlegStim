@@ -13,7 +13,7 @@
 		<div class="steam-nav-upper">
 			<a class="steam-nav-link" href="#">Store</a>
 			<a class="steam-nav-link" href="#">Library</a>
-			<a class="steam-nav-user" href="#">{{ $displayUserName }}</a>
+			<a class="steam-nav-user" href="{{ route('profile') }}">{{ $displayUserName }}</a>
 		</div>
 
 		<div class="steam-nav-lower-wrap" id="steamNavLowerWrap">
@@ -28,7 +28,7 @@
 				</form>
 
 				<a class="steam-nav-link" href="#">Wishlist</a>
-				<a class="steam-nav-link" href="#">Cart</a>
+				<a class="steam-nav-link" href="{{ route('cart.show') }}">Cart</a>
 			</div>
 
 			<div class="steam-nav-dropdown" id="recommendationsDropdown" role="region" aria-label="Recommended for you">

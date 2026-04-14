@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -14,6 +15,8 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
+        
+
         $user->load('statusGame');
 
         $recentGames = collect();
