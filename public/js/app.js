@@ -2061,6 +2061,7 @@ module.exports = {
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./navigation/topNavbar */ "./resources/js/navigation/topNavbar.js");
 
 /***/ },
 
@@ -2097,6 +2098,53 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ },
+
+/***/ "./resources/js/navigation/topNavbar.js"
+/*!**********************************************!*\
+  !*** ./resources/js/navigation/topNavbar.js ***!
+  \**********************************************/
+() {
+
+(function () {
+  if (window.__steamNavInitialized) {
+    return;
+  }
+  window.__steamNavInitialized = true;
+  var nav = document.getElementById('steamNav');
+  var lowerWrap = document.getElementById('steamNavLowerWrap');
+  var recBtn = document.getElementById('recommendationsBtn');
+  var recDropdown = document.getElementById('recommendationsDropdown');
+  if (!nav || !lowerWrap || !recBtn || !recDropdown) {
+    return;
+  }
+  var lastY = window.scrollY || 0;
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY || 0;
+    var delta = y - lastY;
+    if (y > 100 && delta > 4) {
+      nav.classList.add('is-compact');
+      recDropdown.classList.remove('is-open');
+      recBtn.setAttribute('aria-expanded', 'false');
+    } else if (delta < -4 || y <= 40) {
+      nav.classList.remove('is-compact');
+    }
+    lastY = y;
+  }, {
+    passive: true
+  });
+  recBtn.addEventListener('click', function () {
+    var isOpen = recDropdown.classList.toggle('is-open');
+    recBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  document.addEventListener('click', function (event) {
+    if (!lowerWrap.contains(event.target)) {
+      recDropdown.classList.remove('is-open');
+      recBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
 
 /***/ },
 

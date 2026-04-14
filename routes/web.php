@@ -16,11 +16,20 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.show');
+
+// Game / product page
+Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.show');
+
 
 //Route::middleware(['auth'])->group(function () {
  
@@ -34,3 +43,16 @@ Route::get('/games/{game}', [GamePageController::class, 'show'])->name('games.sh
     Route::post('/checkout/promo', [PaymentController::class, 'applyPromo'])->name('payment.promo');
     Route::post('/checkout/wallet', [PaymentController::class, 'toggleWallet'])->name('payment.wallet.toggle');
 //});
+
+// Profile pages
+Route::get('/profile/{user}',         [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/{user}/edit',    [ProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/{user}/update', [ProfileController::class, 'update'])->name('profile.update');
+
+// ── Auth ─────────────────────────────────────────────────────────
+Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register',[AuthController::class, 'register'])->name('register.post');
+Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
+

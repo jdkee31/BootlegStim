@@ -54,7 +54,7 @@ class GamePageController extends Controller
         // Use the URL of the active media if available, otherwise fall back to the default image
         $selectedImage = optional($activeMedia)->url ?? $defaultImage;
 
-        $pricingRow = DB::table('game__pricings')
+        $pricingRow = DB::table('game_pricings')
             ->where('game_id', $game->id)
             ->first();
 
