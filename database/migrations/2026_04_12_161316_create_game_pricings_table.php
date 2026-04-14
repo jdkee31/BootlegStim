@@ -13,7 +13,7 @@ class CreateGamePricingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('game__pricings', function (Blueprint $table) {
+        Schema::create('game_pricings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('game_id');
             $table->decimal('price', 10, 2);
@@ -32,6 +32,6 @@ class CreateGamePricingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game__pricings');
+        Schema::dropIfExists('game_pricings');
     }
 }

@@ -104,6 +104,20 @@ class GameReviewSeeder extends Seeder
             }
 
             foreach ($reviews as $review) {
+                //check if new seeder hours_played equals the hours_played of same user and same game in the database, if so skip to avoid duplicate reviews when running seeder multiple times
+                
+                
+                // 
+                $existingReview = DB::table('game_reviews')->where([
+                    'game_id' => $gameId,
+                    'user_id' => $usersByEmail->get($review['email']),
+                    'hours_played' => $review['hours_played'],
+                ])->first();
+
+                if ($existingReview) {
+                    continue;
+                }
+
                 $userId = $usersByEmail->get($review['email']);
                 if (! $userId) {
                     continue;
