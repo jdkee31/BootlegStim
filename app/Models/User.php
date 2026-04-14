@@ -16,6 +16,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'wallet_balance',
+
         'avatar_url',
         'banner_url',
         'bio',
@@ -35,6 +37,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'last_online_at'    => 'datetime',
     ];
+
+
+    // ---- Library: games the user owns ----
+    public function games()
+    {
+        return $this->belongsToMany(Game::class, 'user_games')
+                    ->withPivot(['hours_played', 'is_installed', 'last_played', 'purchased_at'])
+                    ->withTimestamps();
+    }
+
+    // ---- Orders placed by the user ----
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class);
+    }
+
+    // ---- Cart items (if you use a CartItem model) ----
+    public function cartItems()
+    {
+        return $this->hasMany(\App\Models\CartItem::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Also add this to the $fillable array in User:
+    |--------------------------------------------------------------------------
+    | 'wallet_balance',
+    */
 
     // ── Relationships ────────────────────────────────────────────────────────
 
@@ -91,4 +121,5 @@ class User extends Authenticatable
     if ($this->status === 'busy')   return 'status--busy';
     return 'status--offline';
 }
+
 }
