@@ -1,12 +1,12 @@
 :root {
-    --ink: #1f1d2b;
-    --ink-soft: #5f5d6d;
-    --line: #d8d5e5;
-    --paper: #f6f3ec;
-    --brand: #0e6d65;
-    --brand-soft: #ccece8;
-    --card: #fffdf9;
-    --shadow: 0 16px 28px rgba(31, 29, 43, 0.12);
+    --ink: #c7d5e0;
+    --ink-soft: #8f98a0;
+    --line: #3b4b5f;
+    --paper: #1b2838;
+    --brand: #66c0f4;
+    --brand-soft: #2a475e;
+    --card: #16202d;
+    --shadow: 0 16px 28px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -18,8 +18,8 @@ body {
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     color: var(--ink);
     background:
-        radial-gradient(circle at 90% 10%, #d4efe5 0%, transparent 35%),
-        radial-gradient(circle at 10% 90%, #f5dfbf 0%, transparent 42%),
+        radial-gradient(circle at 90% 10%, #2a475e 0%, transparent 35%),
+        radial-gradient(circle at 10% 90%, #0f1d2a 0%, transparent 42%),
         var(--paper);
     min-height: 100vh;
 }
@@ -102,8 +102,8 @@ body {
     border-radius: 999px;
     font-size: 0.78rem;
     font-weight: 700;
-    background: rgba(14, 109, 101, 0.92);
-    color: #f4fffd;
+    background: rgba(102, 192, 244, 0.92);
+    color: #0d1a24;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     opacity: 0;
@@ -145,7 +145,7 @@ body {
 
 .thumb-button:hover {
     transform: translateY(-2px);
-    border-color: #9bcfc9;
+    border-color: #67c1f5;
 }
 
 .thumb-button.is-active {
@@ -205,7 +205,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--line);
-    background: #f7f7f8;
+    background: #0f1924;
     animation: reveal 320ms ease both;
 }
 
@@ -232,7 +232,7 @@ body {
     border-radius: 10px;
     border: 1px dashed var(--line);
     color: var(--ink-soft);
-    background: #fcfbf8;
+    background: #111a24;
     text-align: center;
 }
 
@@ -268,7 +268,7 @@ body {
 .review-item {
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: #fff;
+    background: #111a20;
     padding: 0.85rem;
 }
 
@@ -291,7 +291,7 @@ body {
 
 .price-old {
     text-decoration: line-through;
-    color: #756f86;
+    color: #73879b;
 }
 
 .price-new,
@@ -309,14 +309,14 @@ body {
     padding: 0.2rem 0.6rem;
     font-size: 0.75rem;
     font-weight: 700;
-    background: #e8f6f4;
-    color: var(--brand);
+    background: #4c6b22;
+    color: #beee11;
 }
 
 .btn-cart {
     border: 0;
-    background: #a2a5ad;
-    color: #fff;
+    background: #5c6a7a;
+    color: #d8dee4;
     border-radius: 10px;
     padding: 0.72rem 1rem;
     width: 100%;
@@ -341,7 +341,7 @@ body {
     width: 100%;
     height: 10px;
     border-radius: 999px;
-    background: #e7e4ef;
+    background: #223142;
     overflow: hidden;
     margin-top: 0.45rem;
 }
@@ -349,7 +349,7 @@ body {
 .recommend-meter span {
     display: block;
     height: 100%;
-    background: linear-gradient(90deg, #1f8a56, #2eb872);
+    background: linear-gradient(90deg, #67c1f5, #417a9b);
 }
 
 .review-list {
@@ -388,13 +388,13 @@ body {
 }
 
 .review-badge.is-positive {
-    color: #15603a;
-    background: #dbf3e6;
+    color: #beee11;
+    background: #4c6b22;
 }
 
 .review-badge.is-negative {
-    color: #8c2f2f;
-    background: #f8e0e0;
+    color: #ff8a8a;
+    background: #4a1f24;
 }
 
 @keyframes reveal {

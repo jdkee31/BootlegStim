@@ -36,16 +36,27 @@ class GamePricingSeeder extends Seeder
 			],
 		];
 
-		$rows = [];
-
 		foreach ($pricingTemplates as $gameTitle => $pricing) {
 			$gameId = $gamesByTitle->get($gameTitle);
+
+			//check if seeded game price, discount percentage, discounted percentage, and currency value are already exist in the database for the same game, if so skip to avoid duplicate entries when running seeder multiple times
+			$existingPricing = DB::table('game_pricings')
+			->where('game_id', $gameId)
+			->where('price', $pricing['price'])
+			->where('discount_percentage', $pricing['discount_percentage'])
+			->where('discounted_price', $pricing['discounted_price'])
+			->where('currency', $pricing['currency'])
+			->first();
+
+			if ($existingPricing) {
+				continue;
+			}
 
 			if (! $gameId) {
 				continue;
 			}
 
-			DB::table('game__pricings')->updateOrInsert(
+			DB::table('game_pricings')->updateOrInsert(
 				['game_id' => $gameId],
 				[
 					'price' => $pricing['price'],
