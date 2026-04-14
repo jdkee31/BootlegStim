@@ -22,7 +22,7 @@ class Game extends Model
      * Relationships:
      * - A Game has many GameMedia items (images, videos, etc.)
      * - A Game has many GameReviews
-     * 
+     * - A Game has many GamePricing 
      * */ 
     protected $fillable = [
         'title',
@@ -50,4 +50,9 @@ class Game extends Model
         return $this->hasMany('App\Models\GameReview');
     }
 
+    public function getGamePricing()
+    {
+        // A Game has many GamePricing (the current pricing information for the game)
+        return $this->hasMany('App\Models\GamePricing');
+    }
 }

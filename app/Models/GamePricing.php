@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Game_Pricing extends Model
+class GamePricing extends Model
 {
     use HasFactory;
-    protected $table = 'game__pricings';
+    protected $table = 'game_pricings';
     /**
      * Attributes:
      * - id: The unique identifier for the game pricing
@@ -19,7 +19,7 @@ class Game_Pricing extends Model
      * - currency: The currency in which the price is listed (e.g., USD, EUR)
      * Relationships:
      * - A Game_Pricing belongs to a Game (the game this pricing information is associated with)
-     * - A Game can have one Game_Pricing (the current pricing information for the game)    
+     * - A Game can have many Game_Pricing (the available pricing information for the game)    
      */
 
     protected $fillable = [
