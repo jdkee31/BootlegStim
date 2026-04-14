@@ -5,11 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ $game->title }} | Product Page</title>
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/games/gamesStorePage.css') }}">
 	<script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
 	@include('topNavbar')
-
+	<!--@extends('layouts.app') seems to change the entire css of this page lol-->
 	@php
 		$mediaCollection = collect($mediaItems ?? []);
 		$reviewCollection = collect($reviews ?? []);
@@ -97,7 +98,7 @@
 		<section class="pricing-section" aria-label="Pricing section placeholder">
 			<div class="section-heading-wrap">
 				<h2>Section 2: Pricing Placeholder</h2>
-				<p>This section is a placeholder for a future <strong>game__pricings</strong> table integration.</p>
+				<p>This section is a placeholder for a future <strong>game_pricings</strong> table integration.</p>
 			</div>
 
 			<div class="pricing-card">

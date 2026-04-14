@@ -28,7 +28,7 @@
 				</form>
 
 				<a class="steam-nav-link" href="#">Wishlist</a>
-				<a class="steam-nav-link" href="#">Cart</a>
+				<a class="steam-nav-link" href="{{ route('cart.show') }}">Cart</a>
 			</div>
 
 			<div class="steam-nav-dropdown" id="recommendationsDropdown" role="region" aria-label="Recommended for you">
