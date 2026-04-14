@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'wallet_balance',
     ];
 
     /**
@@ -41,4 +42,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // ---- Library: games the user owns ----
+    public function games()
+    {
+        return $this->belongsToMany(Game::class, 'user_games')
+                    ->withPivot(['hours_played', 'is_installed', 'last_played', 'purchased_at'])
+                    ->withTimestamps();
+    }
+
+    // ---- Orders placed by the user ----
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class);
+    }
+
+    // ---- Cart items (if you use a CartItem model) ----
+    public function cartItems()
+    {
+        return $this->hasMany(\App\Models\CartItem::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Also add this to the $fillable array in User:
+    |--------------------------------------------------------------------------
+    | 'wallet_balance',
+    */
 }
